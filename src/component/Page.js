@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { baseUrl } from '../config'
 
 import TweetList from './TweetList'
 import TweetPost from './TweetPost';
@@ -9,14 +7,7 @@ import SideBar from './Sidebar';
 class Page extends Component {
     constructor(props) {
         super(props)
-        this.state = {
-            tweets: []
-        };
         this.handleNewPost = this.handleNewPost.bind(this)        
-    }
-
-    updateToken() {
-
     }
 
     handleNewPost(newPost) {
@@ -36,21 +27,13 @@ class Page extends Component {
         })
     }
 
-    componentDidMount() {
-        axios.get(`${baseUrl}/tweet`)
-            .then(res => {
-                const tweets = res.data.tweets
-                this.setState({ tweets });
-            })
-    }
-
     render() {
         return (          
             <div className="container">
                 <SideBar avatar={this.props.avatar}/>
                 <div className="col-3of5 bg-white">
                     <TweetPost avatar={this.props.avatar} handleNewPost={this.handleNewPost} />
-                    <TweetList tweets={this.state.tweets} />
+                    <TweetList />
                 </div>
             </div>
         );

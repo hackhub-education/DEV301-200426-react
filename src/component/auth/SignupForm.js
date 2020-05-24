@@ -3,7 +3,7 @@ import axios from 'axios';
 import { baseUrl } from '../../config'
 import { connect } from 'react-redux'
 
-class Signup extends Component {
+class SignupForm extends Component {
     state = {
       username: '',
       password: ''
@@ -44,4 +44,4 @@ const mapDispatch = ({ user: { updateToken, updateProfile } }) => ({
   updateProfile: profile => updateProfile(profile)
 })
 
-export default connect(null, mapDispatch)(Signup);
+export default connect(null, mapDispatch)(SignupForm);

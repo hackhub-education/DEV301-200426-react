@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { baseUrl } from '../../config'
+import { connect } from 'react-redux'
 
 class LoginForm extends Component {
     state = {
@@ -15,9 +16,14 @@ class LoginForm extends Component {
     }
 
     handleLogin = () => {
+      let that = this
       axios.post(`${baseUrl}/auth/login`, this.state)
         .then(res => {
-          console.log(res)
+          if (res.data && res.data.token) {
+            that.props.updateToken(res.data.token)
+            that.props.updateProfile(res.data.profile)
+            that.props.history.push('/')
+          }
         })
     }
 
@@ -36,4 +42,9 @@ class LoginForm extends Component {
     }
 }
 
-export default LoginForm;
+const mapDispatch = ({ user: { updateToken, updateProfile } }) => ({
+  updateToken: token => updateToken(token),
+  updateProfile: profile => updateProfile(profile)
+})
+
+export default connect(null, mapDispatch)(LoginForm);
